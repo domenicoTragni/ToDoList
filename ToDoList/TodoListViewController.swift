@@ -10,7 +10,7 @@ import UIKit
 
 class TodoListViewController: UITableViewController {
     
-    let itemArray = ["mangiare","dormire","camminare","saltare","telefonare"]
+    var itemArray = ["mangiare","dormire","camminare","saltare","telefonare"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,5 +40,24 @@ class TodoListViewController: UITableViewController {
         }
         cell?.isSelected = false
 }
-
+    // MARK - aggiunto nuovo oggetto
+    
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        var textField = UITextField()
+   
+    let alert = UIAlertController(title: "Aggiungi nuovo articolo", message: nil, preferredStyle: .alert)
+    let action =  UIAlertAction(title: "Aggiungi", style: .default) { (action) in
+        // impostiamo codice che gestisce la pressione del bottone aggiungi
+        self.itemArray.append(textField.text!)
+        print("Aggiunto: \(textField.text!) nell'array")
+        self.tableView.reloadData()
+    }
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Aggiungi elemento"
+            textField = alertTextField
+           alert.addAction(action)
+       self.present(alert, animated: true, completion: nil)
+        }
+   }
+    
 }
