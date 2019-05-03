@@ -11,10 +11,14 @@ import UIKit
 class TodoListViewController: UITableViewController {
     
     var itemArray = ["mangiare","dormire","camminare","saltare","telefonare"]
+    let defaults = UserDefaults.standard
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        if let item = defaults.array(forKey: "CreareUnaLista")as?[String]{//passa alla costante il valore del nostro "database" come array di stringe e successivamente lo passiamo al nostro array, che verra' caricato con i nuovi valori che non sono stati preinseriti da noi durante la creazione dell'array
+            itemArray = item
+        }
     }
     
      // MARK - Table View Datasource Methods
@@ -49,6 +53,7 @@ class TodoListViewController: UITableViewController {
     let action =  UIAlertAction(title: "Aggiungi", style: .default) { (action) in
         // impostiamo codice che gestisce la pressione del bottone aggiungi
         self.itemArray.append(textField.text!)
+        self.defaults.set(self.itemArray, forKey: "CreareUnaLista")
         print("Aggiunto: \(textField.text!) nell'array")
         self.tableView.reloadData()
     }
